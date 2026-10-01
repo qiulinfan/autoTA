@@ -73,17 +73,20 @@ If no visual surface is available, label visual quality `not_tested`; do not inf
 Read [references/quality-gates.md](references/quality-gates.md). Run only the gates relevant to the contract, but never skip geometry and export/import gates for a deliverable called game-ready.
 
 Resolve the bundled executables from the globally linked Skill, independent of
-the target game's current directory. Probe the supported runtime Skill homes in
-order — the Codex home first, then the Claude Code home — and use the first one
-that actually contains the bundled scripts. On macOS, run the POSIX examples in
-`zsh` or `bash` inside iTerm2; iTerm2 is the terminal emulator, not the shell.
-Use the same POSIX syntax on Linux. Do this once before using any example:
+the target game's current directory. Use the discovered Skill directory when
+the harness provides it, or probe the four supported runtime Skill homes below
+and use the first one that contains the bundled scripts. Run the POSIX examples
+in `zsh` or `bash` on macOS or Linux. For a named OMP profile, set
+`PI_CODING_AGENT_DIR` to that profile's agent directory. Do this once before
+using any example:
 
 ```sh
 auto_ta_skill_dir=""
 for candidate in \
     "${CODEX_HOME:-$HOME/.codex}/skills/auto-ta" \
-    "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/auto-ta"; do
+    "${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/auto-ta" \
+    "${XDG_CONFIG_HOME:-$HOME/.config}/opencode/skills/auto-ta" \
+    "${PI_CODING_AGENT_DIR:-$HOME/.omp/agent}/skills/auto-ta"; do
   if [ -f "$candidate/scripts/blender_asset_audit.py" ]; then
     auto_ta_skill_dir="$(realpath "$candidate")"
     break
@@ -109,9 +112,17 @@ $ClaudeHome = if ([string]::IsNullOrWhiteSpace($env:CLAUDE_CONFIG_DIR)) {
 } else {
   [System.IO.Path]::GetFullPath($env:CLAUDE_CONFIG_DIR)
 }
+$ConfigHome = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else {
+  Join-Path ([Environment]::GetFolderPath('UserProfile')) '.config'
+}
+$OmpHome = if ($env:PI_CODING_AGENT_DIR) { $env:PI_CODING_AGENT_DIR } else {
+  Join-Path ([Environment]::GetFolderPath('UserProfile')) '.omp' 'agent'
+}
 $AutoTaSkillDir = @(
   (Join-Path $CodexHome 'skills\auto-ta'),
-  (Join-Path $ClaudeHome 'skills\auto-ta')
+  (Join-Path $ClaudeHome 'skills\auto-ta'),
+  (Join-Path $ConfigHome 'opencode' 'skills/auto-ta'),
+  (Join-Path $OmpHome 'skills/auto-ta')
 ) | Where-Object { Test-Path -LiteralPath (Join-Path $_ 'scripts\blender_asset_audit.py') } |
   Select-Object -First 1 | ForEach-Object { (Resolve-Path -LiteralPath $_).Path }
 if (-not $AutoTaSkillDir) { throw 'AUTO_TA_SKILL_NOT_LINKED' }
@@ -120,7 +131,7 @@ $CompareScript = (Resolve-Path -LiteralPath (Join-Path $AutoTaSkillDir 'scripts\
 $ReceiptValidator = (Resolve-Path -LiteralPath (Join-Path $AutoTaSkillDir 'scripts\validate_receipt.py')).Path
 ```
 
-Treat failure to resolve any of these absolute paths from both runtime homes as
+Treat failure to resolve these absolute paths from the linked Skill homes as
 `AUTO_TA_SKILL_NOT_LINKED`; do not fall back to `scripts/...` relative to the
 game cwd. Set the remaining asset, output, and trusted-Blender variables to
 explicit absolute paths for the current job, using the lowercase variable names

@@ -133,10 +133,14 @@ safely and preserve it for manual inspection. The lifecycle does not promise
 automatic stale cleanup for that fallback. Enable Windows Developer Mode so
 agent symlinks can be used when rename/delete cleanup must remain automatic.
 
-Claude Code integration is skills-only: `scripts/link-claude-skills.sh`
-(POSIX/WSL) or `scripts/link-claude-skills.ps1` (native Windows) links each
-Skill into the Claude Code user Skill directory; Skills resolve their bundled
-scripts from either runtime home.
+Claude Code, OpenCode, and OMP integration is skills-only. Run
+`scripts/link-skills.sh claude`, `opencode`, or `omp` on POSIX/WSL, or
+`scripts/link-skills.ps1 -Runtime claude` / `opencode` / `omp` in PowerShell 7.
+The existing `link-claude-skills` entry points remain available. The linker
+uses each runtime's native `skills/` directory and preserves foreign entries;
+rerun after pulling or changing the Skill inventory, then start a new session.
+Bundled scripts resolve from all four runtime homes. Full product integration
+and custom agents keep the Codex contract above.
 
 ## Profiles are explicit
 

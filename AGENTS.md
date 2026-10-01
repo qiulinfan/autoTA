@@ -20,11 +20,13 @@ Rules for working in this repository:
 - Engine boundary: AutoTA does not mutate a game project's scenes or code on
   its own authority. For Unity-MCP-mutating steps that remain inside kept
   Skills, match the instance by resolved project root before every mutation.
-- Claude Code boundary: integration is skills-only via
-  `scripts/link-claude-skills.sh` / `.ps1`, deliberately independent of
+- Claude Code, OpenCode, and OMP boundary: integration is skills-only via
+  `scripts/link-skills.sh RUNTIME` / `.ps1 -Runtime RUNTIME`, deliberately independent of
   `workflow.bundle.toml` and the receipt-backed Codex link contract; those
-  scripts install no agents, workflows, profiles, or receipts. Skills resolve
-  bundled scripts by probing the Codex home then the Claude Code home.
+  scripts install no agents, workflows, profiles, or receipts. The existing
+  `link-claude-skills` entry points delegate to this product-owned linker.
+  Skills resolve bundled scripts through the linked Skill directory or the
+  four native runtime Skill homes.
 - After changing the Skill/agent/workflow/profile inventory, update
   `workflow.bundle.toml` in the same change and run the full validation path
   in `README.md` before reporting success.
