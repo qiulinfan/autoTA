@@ -45,15 +45,67 @@ Invoke `search-game-art` when purchasing, downloading, or adapting a licensed as
 ## Hosted 3D and texture providers
 
 Provider-backed generation runs through `$generate-hosted-game-art` (Meshy and
-Tencent Cloud, from a user-supplied credential file). When credentials are
-available and the user has authorized a budget, prefer hosted generation for
-original base assets and treat Blender as the downstream adaptation, audit, and
-lookdev layer rather than the primary authoring route. Before use, establish
+Tencent Cloud, from a user-supplied credential file). Resolve the route with the
+user under [asset-standards.md](asset-standards.md), unless already selected or
+delegated. Credentials alone do not select hosted generation over direct Blender
+authoring. P2 is the Tripo default, subject to availability and user overrides.
+Before use, establish
 the provider and model/version, expected charge or quota (via that Skill's free
 probe), upload boundary, content and license terms, credential availability
 without exposing the secret, output formats, and independent audit route.
 
 Provider success means only that output was returned. Run the same geometry, material, rig, visual, export, and engine gates as locally authored assets.
+
+### Tripo API (opt-in product adapter)
+
+For an explicitly requested Tripo API route, use the product's
+`scripts/tripo_client.py` and [Tripo adapter guide](../../../scripts/tripo-adapter.md),
+which contains official documentation, billing, pricing and credential links.
+Resolve the real Skill path to its product root and verify both files exist;
+alternatively use the runtime's linked `workflow-products/autota` root. Never
+resolve a relative `scripts/` path from the target game's cwd. If a standalone
+Skill copy lacks the product adapter, report that capability as unavailable;
+do not claim the Meshy/Tencent helper already supports Tripo.
+
+Probe balance read-only; explicit payment/upload authorization is still needed
+for submission. Use a fresh stage per paid operation, retain task IDs and query
+existing tasks after interruptions. Never retry a timed-out POST blindly. Do
+not infer Smart UV support from `export_uv`, or quad/face guarantees from request
+flags. Audit artifacts independently and select keep/local repair/reconstruct
+using the user's saved standards, importance and observed defects.
+
+### Tripo Studio web (manual transfer handoff)
+
+Tripo Studio web is an alternative to the API. Honor the user's selected route;
+do not switch a web task to paid API generation implicitly. Default new web
+generation to text-to-model, Smart Mesh, quad topology and 2K textures unless
+the current task or saved preferences override them. Verify available controls,
+selected model/version, generation count and displayed credit cost before a
+budget-authorized submission. Do not assume web and API credits are shared, web
+is always cheaper, or a generation preset guarantees the delivered topology,
+texture resolution, Smart UV or PBR channels.
+
+After generation, ask the user to transfer the selected asset by either manual
+download to the agreed local directory or the existing Studio Bridge's Send to
+Blender / My Assets download button. This transfer is a deliberate human handoff
+by default, not a requirement to automate browser downloads or Bridge clicks.
+Do not bypass Chrome security warnings or install/configure a bridge solely to
+avoid the handoff. Do not confuse Studio Bridge with the Blender Tripo API
+Generator. Reuse an existing generated asset rather than generating it again
+because transfer is pending.
+
+Continue after the local files or intended Blender scene are available. Record
+the Studio asset identity, selected variant, transfer method and actual file
+hashes when saved. A Bridge 'transfer success' message alone does not prove
+Blender import, materials or persistence: inspect the received objects, UVs,
+image dependencies and actual texture sizes. Preserve unsaved user scenes;
+request a saved copy if the only available audit route is headless Blender.
+Use the normal autoTA audit, repair, export and Unity handoff gates afterward.
+
+For batches, prefer a separate named collection per asset in a staging file,
+or separate Blend files when materials, scale or identity would be ambiguous.
+Track and audit each asset independently; never join unrelated assets merely
+for transfer convenience. Do not claim this route is unattended end-to-end.
 
 ## Incompatible instruction sets
 

@@ -56,7 +56,7 @@ Weak texture-preserving emission can be an intentional stylized face treatment, 
 Retain:
 
 - Blender neutral close-up and full-body captures;
-- Unity close-up and target-camera captures from the rebuilt validation scene;
+- Unity close-up and target-camera captures from the authorized existing/shared scene or temporary preview, or recorded user visual acceptance with its scope; no dedicated saved Scene per model is required. If no visual acceptance has occurred, retain `not_tested`;
 - renderer/submesh/material tables and focused automated tests;
 - texture importer and saved material state after reimport;
 - representative animation poses, because deformation can expose sorting and card intersections;

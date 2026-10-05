@@ -2,6 +2,17 @@
 
 Create this contract before tool execution. Store it in `asset-contract.json` for production work; present a short plain-language summary to the user.
 
+Apply [asset-standards.md](asset-standards.md) before choosing budgets. Record
+the selected preference source, importance/viewing distance, and processing
+route. Add `geometry.target_polygons`, `geometry.polygon_tolerance` (default
+0.2), `geometry.polygon_range`, and `geometry.topology_policy` alongside the
+separate `max_triangles`. For example, a 2000-polygon prop has a 1600–2400 range;
+allow only triangles/quads, with deformation-aware quads and useful mixed
+topology for rigid props. Record source route and user choice or delegated
+reasoning, plus padding policy and required PBR channels. Default Tripo to P2.
+Record `adaptation.route` as `keep`, `local_repair`, or `reconstruct`, with its
+reason. A low-priority asset or a small defect normally does not need remeshing.
+
 ```json
 {
   "schema_version": "1.0",
@@ -40,7 +51,7 @@ Create this contract before tool execution. Store it in `asset-contract.json` fo
   },
   "textures": {
     "workflow": "metallic-roughness",
-    "max_resolution": 1024,
+    "max_resolution": 2048,
     "sets": 1,
     "required_maps": ["base_color", "normal", "metallic_roughness"]
   },
@@ -76,6 +87,11 @@ Keep semantic width/depth/height separate from the authoring application's XYZ o
 
 Keep `uv_coordinate_preservation_required` true for bitmap-textured, baked, lightmapped, atlas, decal, or hand-painted assets. It may be false only when the contract has no coordinate-dependent appearance and allows the exporter to reparameterize UVs; UV existence, finite values, and nonzero area on every polygon remain mandatory.
 
+That export-preservation requirement applies to the final editable source and
+its exchange file. An explicitly selected reconstruction can replace the input
+asset's UVs and rebake its maps first; record this adaptation separately and
+then enforce strict UV preservation on the new delivery pair.
+
 For an image-textured character, fill `lookdev.critical_regions` with areas such as face, eyes, mouth, hairline, hands, or costume marks that must remain readable. Inventory shared atlases and alpha surfaces before changing tints or transparency. Record both diagnostic close-up distance and expected gameplay camera distance; passing only one does not prove the other.
 
 ## Prototype defaults
@@ -84,11 +100,12 @@ Use these only when the request does not supply a target:
 
 - meters; dimensions inferred from the object category and clearly disclosed;
 - bottom-center pivot for placeable props, local origin for articulated pieces;
-- one material set, metallic-roughness PBR, 1024 px maximum;
+- one material set, metallic-roughness PBR, 2048 x 2048 textures by default;
 - desktop real-time target, conservative shader features;
 - source `.blend` plus `.glb`; do not silently promise `.fbx` when an FBX round-trip cannot be tested;
 - no rig, animation, LOD, collider, lightmap UV, or engine project mutation unless requested;
-- triangle budget chosen from the target size and viewing distance, recorded as an assumption.
+- editable polygon target chosen from [asset-standards.md](asset-standards.md)
+  and the target viewing distance; independently record the engine triangle cap.
 
 ## Questions worth stopping for
 

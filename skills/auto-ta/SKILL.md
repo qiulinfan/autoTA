@@ -15,7 +15,17 @@ Match all user-facing explanations, questions, prompts, and handoffs to the user
 
 Read [references/asset-contract.md](references/asset-contract.md). Translate the request into its fields and show the user only the decisions that materially affect the result. Do not ask the user to choose terms such as topology, texel density, skinning method, or color space.
 
-If information is missing, use the `prototype` preset and state the assumptions. Ask before proceeding only when the answer changes authorization, cost, irreplaceable source data, target compatibility, or the basic artistic identity.
+Read [references/asset-standards.md](references/asset-standards.md) for this fork's
+editable-quad preference, size/complexity-based polygon targets with ±20%
+tolerance, first-use preferences, source/provider choice and repair routing.
+Resolve the source route with the user before production unless already chosen
+or delegated. Ask once
+for user standards after deployment when they are not already known; reuse
+accepted preferences thereafter. Before production, establish importance and
+viewing distance when unknown, so distant low-priority props and small defects
+do not trigger unnecessary reconstruction.
+
+If other information is missing, use the `prototype` preset and state the assumptions. Ask before proceeding only when the answer changes authorization, cost, irreplaceable source data, target compatibility, or the basic artistic identity.
 
 Distinguish these jobs:
 
@@ -37,6 +47,11 @@ Read [references/runtime-routing.md](references/runtime-routing.md), then probe 
 4. Use `character-rig-animation-alignment` when a humanoid character and external animation rig must be normalized, retargeted, wired, and accepted together.
 5. Use Unity MCP only when it is healthy and its exact project root is the user-authorized target. Reuse the project's render pipeline and conventions.
 6. Use a hosted 3D or texture provider only after the user authorizes that provider, likely cost, upload, and credentials. Never place credentials in prompts, scripts, receipts, repositories, or command output.
+
+For Tripo API generation, follow the opt-in Tripo adapter route in
+[references/runtime-routing.md](references/runtime-routing.md); API links and
+the existing credential-file client are maintained in the product-level adapter
+guide. Studio web credits and API credits must not be assumed interchangeable.
 
 Do not install a DCC, package, add-on, MCP gateway, persistent service, or daemon merely to make a route available. Report the missing capability and use another authorized route or stop at a useful intermediate artifact.
 
@@ -235,7 +250,11 @@ creation, Console clear, Play, Stop, screenshot or capture, scene
 load/reload/reset, test execution, build or project settings, asset import/refresh or reimport, and save. Repeat it after reconnect, Editor restart,
 domain reload, branch/worktree switch, or MCP instance selection.
 
-For Unity, keep raw source assets separate from prefabs and project-authored materials. Configure importer settings explicitly, instantiate a minimal validation prefab or scene, and verify the target render pipeline. Do not mutate an unrelated open project because its MCP happens to be connected.
+For Unity imports, follow [references/unity-asset-layout.md](references/unity-asset-layout.md): reuse a clearly established model library or fall back to `Assets/AutoTA_Models`, name each item folder and model `category_Features`, and keep one shared batch importer plus configuration outside `Assets` with only temporary Editor staging when required.
+
+For Unity, keep raw source assets separate from prefabs and project-authored materials. Configure importer settings explicitly and verify the target render pipeline. Do not create or save a dedicated validation Scene for every asset by default. Deliver the model, textures/materials and a prefab when useful; the user may drag the asset into their own scene for visual acceptance. For agent-run visual checks, prefer Prefab Mode, an authorized existing shared scene, or a temporary unsaved preview scene that is closed afterward without altering user scene contents or unsaved edits. Only retain a dedicated test scene when explicitly requested or agreed for a specific test. If visual acceptance is left to the user, record it as pending / `not_tested` until actual evidence or user confirmation arrives; distinguish user acceptance from automated verification.
+
+Treat one-off import/repair Editor scripts as tooling, not model dependencies. Once importer settings, material remaps and prefabs are saved and verified after reimport/reload, they may be removed with their own .meta files or archived outside Assets. Keep reusable tooling centrally rather than duplicating it per model. Do not remove AssetPostprocessors, ScriptedImporters, custom inspectors or referenced/runtime types without checking their continuing dependencies. Preserve model, texture, material, prefab and importer .meta files, and retain any script version required to reproduce recorded evidence outside Assets. Do not mutate an unrelated open project because its MCP happens to be connected.
 
 For an image-textured character or any Blender-to-Unity look-development job, read [references/blender-unity-character-lookdev.md](references/blender-unity-character-lookdev.md). Treat renderer submesh/material mapping, shared-atlas use, alpha surfaces, texture import, shader properties, local keywords, and serialized reimport state as separate gates. Blender material-slot order is not proof of Unity renderer order.
 
@@ -243,6 +262,12 @@ For an image-textured character or any Blender-to-Unity look-development job, re
 
 ### Modeling and UV
 
+- Follow [asset standards](references/asset-standards.md): triangles/quads only,
+  deformation-aware quads and useful mixed topology for rigid props. Choose keep,
+  local repair or reconstruction by visible importance, defects and total work.
+  Do not remesh solely to reach 100% quads. Only for the reconstruct
+  route, read [references/mesh-reconstruction.md](references/mesh-reconstruction.md)
+  and use the bundled bounded helper rather than rewriting the pipeline.
 - Model to observable dimensions and silhouette, not a vague object label.
 - Check duplicate/loose geometry, degenerate faces, normals, unintended boundary or non-manifold edges, negative scale, intersections, pivot, and triangle count.
 - Validate UV existence, intended unique versus tiled regions, padding, orientation where meaningful, texel density, and required lightmap UV. An automatic overlap number alone is not sufficient.
@@ -250,6 +275,7 @@ For an image-textured character or any Blender-to-Unity look-development job, re
 ### PBR materials and texture painting
 
 - Define the target shader and exact channel packing before generating maps.
+- Apply the padding/background policy in [asset standards](references/asset-standards.md); preserve valid texels and check mip seams. A fixed bake margin alone does not prove acceptance.
 - Treat base color/emission as color data and masks, metallic, roughness, normal, height, and ambient occlusion as non-color data unless the target pipeline specifies otherwise.
 - Validate normal-map handedness, bit depth where displacement matters, alpha mode, seams, tiling, and mip behavior. Never relabel a color image as a normal/roughness map just to satisfy a filename contract.
 - Inventory every mesh that shares a material or atlas before applying a tint or shader change; a face-detail texture may also serve teeth, eyes, boots, or another mesh.

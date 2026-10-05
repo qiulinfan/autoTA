@@ -5,6 +5,7 @@ import json
 import shutil
 import subprocess
 import tempfile
+import tomllib
 import unittest
 from pathlib import Path
 
@@ -93,7 +94,11 @@ class PowerShellLinkLifecycleTests(unittest.TestCase):
         self.assertEqual(skill_source.resolve(), skill_link.resolve())
         receipt_value = json.loads(receipt.read_text(encoding="utf-8"))
         self.assertEqual("autota", receipt_value["product"])
-        self.assertEqual(20, len(receipt_value["entries"]))
+        manifest = tomllib.loads(
+            (self.bundle_root / "workflow.bundle.toml").read_text(encoding="utf-8")
+        )
+        expected_links = len(manifest["skills"]) + len(manifest["agents"]) + 1
+        self.assertEqual(expected_links, len(receipt_value["entries"]))
 
         doctor = self.run_ps(
             "doctor.ps1", "-CodexHome", str(codex_home), cwd=unrelated_cwd

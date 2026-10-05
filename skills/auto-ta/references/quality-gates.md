@@ -7,6 +7,8 @@ Select gates from the asset contract. Every required gate needs raw evidence and
 - Intended object and hierarchy counts; stable, unique names.
 - Dimensions, unit scale, orientation, origin/pivot, transforms, and negative scale. Contract dimensions and ground contact are measured from dependency-graph-evaluated world-space mesh vertices; raw pre-modifier bounds are recorded only as source-editability evidence.
 - Vertex/edge/polygon/triangle counts within the declared budget.
+- Zero n-gons in editable delivery; deforming regions have suitable edge flow
+  and pose evidence, not just a high quad ratio.
 - Loose, duplicate, degenerate, boundary, and non-manifold geometry as appropriate to the asset. Record raw topology separately from a tiny-tolerance position-welded geometric probe: exchange formats may split vertices at UV, normal, or material seams, while the welded result can also hide unintended coincident shells if its tolerance is too large.
 - Face orientation, normals, smoothing, hard edges, and tangent readiness. For assets contracted as closed solids, use `--require-closed --require-outward-winding`; the latter checks disconnected welded shells independently and rejects inconsistent or globally inverted winding.
 - Modifier order and whether the source remains editable.
@@ -21,6 +23,9 @@ Select gates from the asset contract. Every required gate needs raw evidence and
 - Every material slot is intentional and every referenced image resolves or is packed as contracted.
 - Per-polygon material use and the target engine's actual renderer submesh/material order are inventoried; zero-polygon source slots and stripped engine slots are recorded instead of assumed to retain their indices.
 - Exact map semantics, dimensions, bit depth, alpha mode, color space, channel packing, and normal convention are recorded.
+- Check UV-mask-based edge extension or compatible base-color background,
+  preserved island interiors and channel-aware padding under asset-standards.md.
+  Arbitrary black gutters around colored islands are not accepted by default.
 - Seams, mip behavior, compression artifacts, and representative near/far appearance are visually checked.
 
 ## Rig and animation
@@ -54,7 +59,7 @@ Select gates from the asset contract. Every required gate needs raw evidence and
 - Dimensions, transforms, axes, hierarchy, pivots, normals, tangents, UVs, material maps, skeleton, and clips survive. Recompute imported world-space bounds from imported mesh vertices and compare them with both the contract and evaluated source bounds. The bundled comparator alone proves only its declared fields; open-surface normal direction, exported tangents, bitmap/channel identity, tangent-space normal maps, complex node graphs, and target-engine double-sided behavior require dedicated evidence or remain `not_tested`.
 - For skinned or multipart characters, compare saved renderer `subMeshCount`, `sharedMaterials` count/order, and the intended material identity for every populated submesh. DCC material-panel order is diagnostic evidence only.
 - Engine-side shader and render-pipeline conversion is explicit.
-- A minimal prefab or validation scene renders and animates the asset when engine integration is required.
+- When engine integration requires visual acceptance, verify rendering and applicable animation in Prefab Mode, an authorized shared/existing scene, a temporary unsaved preview, or a scene chosen by the user. Do not require a new saved validation Scene per asset. User-performed scene acceptance is valid when recorded as such; before it occurs, mark the visual gate `not_tested`, not pass. Keep importer/material/reimport checks independent of that visual gate.
 - Static batching, instancing, collider, lightmap, compression, memory, draw-call, triangle, bone, skin-influence, and shader-variant budgets are checked when applicable.
 
 ## Visual and capture evidence
