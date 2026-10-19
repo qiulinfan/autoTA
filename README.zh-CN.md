@@ -1,5 +1,20 @@
 # AutoTA
 
+## 自主场景制作与可选模块
+
+场景任务默认由 Agent 连续完成制作、技术检查、视觉自检与最终交付，不逐阶段
+要求人工批准。开工时结合设计想法、多角度参考和物品参考，一次性确定白盒、
+母型与外观变体、人工调整保护、材质做旧及人工审核节点。中途人工审核为可选；
+做旧默认关闭。单张参考图的严格还原属于特定模式，不作为独立游戏制作的默认要求。
+关闭人工调整管理模块，也不代表允许覆盖未授权的用户修改。
+
+详见[场景流程](skills/auto-ta/references/scene-production.md)、
+[UE 集成规范](skills/auto-ta/references/unreal-integration.md)和
+[材质变化与做旧](skills/auto-ta/references/material-variation.md)。
+配置校验脚本 `validate_scene_options.py` 只检查选项及冲突，不代替实际引擎验证。
+空间检查、固定视角回归及增量导入须在具体目标工程中执行；不将流程规范宣称为
+已验证的通用无人值守 UE 场景生成器。
+
 [English](README.md) | **简体中文**
 
 AutoTA 是一套可移植、以实际验收证据为依据的技术美术流程。它将美术需求

@@ -44,6 +44,25 @@ shares), two namespaced Codex agents (`autota_technical_artist`,
 
 ## Asset creation and sourcing
 
+### Autonomous scenes and optional modules
+
+For authorized scene work, AutoTA defaults to continuous execution with agent-run
+technical/visual checks and final handoff, rather than per-stage human approval.
+At kickoff, resolve optional blockout, master/variant reuse, human-edit
+preservation and weathering from the brief and user preferences. Weathering is
+off by default; intermediate human review is opt-in. Multiple references and
+gameplay/design ideas are normal inputs; strict single-image reconstruction is
+an explicit mode. Existing user work remains protected in every mode.
+
+See the [scene workflow](skills/auto-ta/references/scene-production.md),
+[UE integration](skills/auto-ta/references/unreal-integration.md) and
+[material variation](skills/auto-ta/references/material-variation.md).
+The bundled `validate_scene_options.py` checks policy configuration only. Engine
+execution, spatial checks and visual acceptance still require actual target
+tools and evidence; these guides do not claim a universal tested UE generator.
+
+### Production routes
+
 Choose the production route with the user before starting, unless it is already
 specified or the user delegates the decision. Compare the expected result,
 provider credits, agent tokens and likely repair work together.

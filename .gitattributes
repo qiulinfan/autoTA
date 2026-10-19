@@ -8,3 +8,6 @@
 *.yml text eol=lf
 *.json text eol=lf
 *.md text eol=lf
+
+# Pipeline sources are hashed byte for byte; never convert line endings.
+*.ppm -text

@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import json
 import shutil
+import stat
 import subprocess
 import tempfile
 import tomllib
@@ -13,13 +14,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def _is_junction(path: Path) -> bool:
+    # Path.is_junction() needs Python 3.12; the bundle supports 3.11.
+    try:
+        return os.lstat(path).st_reparse_tag == stat.IO_REPARSE_TAG_MOUNT_POINT
+    except (AttributeError, OSError):
+        return False
+
+
 def _points_directly_to(source: Path, destination: Path) -> bool:
     if source.is_file() and destination.is_file():
         return os.path.samefile(source, destination)
-    if destination.is_symlink():
+    if destination.is_symlink() or _is_junction(destination):
         return destination.resolve() == source.resolve()
-    is_junction = getattr(destination, "is_junction", None)
-    return bool(is_junction and is_junction() and destination.resolve() == source.resolve())
+    return False
 
 
 @unittest.skipUnless(os.name == "nt", "PowerShell lifecycle is exercised on Windows")

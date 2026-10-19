@@ -6,6 +6,11 @@ claim that every game or provider requires quad-only meshes.
 
 ## First use after deployment
 
+For a scene job, combine onboarding with the optional module choices in
+[scene-production.md](scene-production.md). Autonomous completion with agent
+checks is the default; do not repeat questions for each asset when the brief or
+delegation already resolves them. Weathering is optional, not a PBR requirement.
+
 On the first asset job after deployment, ask once in plain language whether the
 user has their own standards: target engine/platform, typical viewing distance,
 editable topology, polygon and texture budgets. Present the defaults below so
@@ -40,6 +45,15 @@ conducts onboarding at the first actual job, not in an unattended installer.
 - Rigid props (furniture, weapons) may freely mix useful triangles and quads;
   prefer quads where later editing benefits. Classify by actual deformation,
   not the object's label: flexible weapons need deformation-aware topology too.
+- On rigid props, useful local triangles are acceptable at rounded corners,
+  bends, bevel transitions, and where buttons or small details meet a planar
+  panel. They can resolve an n-gon or terminate edge loops without extending
+  unnecessary cuts across the object. Judge silhouette, shading, non-degenerate
+  faces and the intended editability; triangle presence or quad percentage alone
+  is not a defect. Preserve satisfactory generated surfaces and texture detail.
+  If the current asset explicitly requires quad-only output, report that
+  contractual difference separately from visual/technical defects; a later user
+  acceptance of useful triangles supersedes the earlier quad-only requirement.
 - Triangle fans on a flat circular clock dial, triangular polyhedra and similar
   intentional constructions are acceptable when shading and editing remain
   sound. A fan is an option, not the only way to model a circle. Do not remesh
@@ -57,6 +71,10 @@ conducts onboarding at the first actual job, not in an unattended installer.
 - UVs should be understandable for editing: sensible seams, useful orientation,
   no unintended overlap/collapse, adequate padding and density. Do not stretch
   an island merely to make it rectangular. Retain existing satisfactory UVs.
+  For independently replaceable screens/labels, record a separate material
+  region, UV bounds and content aspect ratio; a rectangle inside a square map
+  is valid. Use a grid test to check distortion. Smart UV and good-looking
+  original textures do not prove suitability for later texture replacement.
 - Default texture maps to 2048 x 2048 for all routes. Explicit asset or reviewed
   user/project settings may override this. Verify actual delivered dimensions;
   upscaling alone does not add detail or prove texture quality.

@@ -1,6 +1,6 @@
 ---
 name: auto-ta
-description: "A novice-friendly 3D Technical Art Skill for game assets: turn a plain-language request into an asset contract, create or adapt 3D geometry, UVs, PBR materials, rigs, animation, lighting, shaders, VFX, exports, and Unity imports, then validate the real artifacts. Use for 3D models, 3D texture and material work, rigging or retargeting, render setup, Blender-to-engine character lookdev, DCC handoff, and 3D technical-art audits. Do not use for standalone 2D art, sprite creation, or sprite-sheet work; 2D imagery is in scope only when it supports a 3D asset."
+description: "A 3D Technical Art Skill to create and validate game assets and scenes from design briefs or references, including geometry, UVs, PBR, rigs, animation, lighting, shaders, exports and authorized Unity or Unreal integration. Use for autonomous 3D production, Blender-to-engine handoff and technical-art audits. Scene blockout, master variants, human review and weathering are project options. Do not use for standalone 2D art, sprite creation, or sprite-sheet work; 2D imagery is in scope only when supporting a 3D asset."
 ---
 
 # Auto TA
@@ -12,6 +12,13 @@ Act as a 3D technical artist for a user who may know no technical-art vocabulary
 Match all user-facing explanations, questions, prompts, and handoffs to the user's language unless they request another language. Keep commands, identifiers, structured keys, action codes, and raw errors unchanged.
 
 ## Start With an Asset Contract
+
+Default to autonomous execution through final delivery, with agent-run technical
+and visual checks. Human review is not implied by a checkpoint. For scene jobs,
+read [references/scene-production.md](references/scene-production.md): resolve
+optional blockout, master assets/variants, human-edit preservation and weathering
+once at kickoff, reusing supplied preferences. Do not turn single-image exam
+reconstruction into the default workflow for original game production.
 
 Read [references/asset-contract.md](references/asset-contract.md). Translate the request into its fields and show the user only the decisions that materially affect the result. Do not ask the user to choose terms such as topology, texel density, skinning method, or color space.
 
@@ -34,6 +41,8 @@ Distinguish these jobs:
 - `rig_or_animation`: create, repair, retarget, or validate a skeleton or clip.
 - `lookdev`: materials, textures, lighting, shader, or VFX work.
 - `audit_or_handoff`: inspect, export, round-trip, or import into an engine.
+- `scene_build`: assemble a scene from a game brief, object references and/or
+  multiple views; use the optional scene contract alongside per-asset contracts.
 
 For a `rig_or_animation` job that aligns a skinned humanoid character with external skeletal clips, invoke `$character-rig-animation-alignment` after establishing this asset contract. Let that Skill own source/license evidence, deform-rig extraction, rest/units/root normalization, Humanoid import, Animator/prefab wiring, and runtime acceptance. Keep `auto-ta` responsible for the broader asset job and final receipt; do not duplicate or weaken the specialized gates.
 
@@ -47,6 +56,8 @@ Read [references/runtime-routing.md](references/runtime-routing.md), then probe 
 4. Use `character-rig-animation-alignment` when a humanoid character and external animation rig must be normalized, retargeted, wired, and accepted together.
 5. Use Unity MCP only when it is healthy and its exact project root is the user-authorized target. Reuse the project's render pipeline and conventions.
 6. Use a hosted 3D or texture provider only after the user authorizes that provider, likely cost, upload, and credentials. Never place credentials in prompts, scripts, receipts, repositories, or command output.
+7. For authorized Unreal Engine work, read [references/unreal-integration.md](references/unreal-integration.md).
+   Prefer bounded Python/CLI batches with actual saved-engine verification.
 
 For Tripo API generation, follow the opt-in Tripo adapter route in
 [references/runtime-routing.md](references/runtime-routing.md); API links and
@@ -78,6 +89,10 @@ Make the smallest complete representative asset before expanding detail. Keep pr
 Use stable names. Do not join independent parts merely to make the object count smaller. Do not apply modifiers, transforms, or armature changes until the validated export copy requires it.
 
 ### 3. Perform a visual checkpoint
+
+This is an agent inspection, not an automatic request for human approval. Continue
+through routine fixes within scope; pause only at selected human gates or when
+new information requires authorization or a consequential artistic decision.
 
 Render or capture enough views to expose silhouette, proportions, intersections, shading, UV/material errors, deformation, and lighting. Inspect those images. Use a neutral look-development view to diagnose the asset and the target gameplay camera to accept it. For animation, inspect representative poses plus the full clip timing; a still image cannot validate motion. For a visible direction such as gaze, facing, toe aim, or prop aim, define the observable region and semantic axis from unanimated render geometry, audited landmarks, or a verified skin/bind reference. Do not assume a bone's local axis represents the visible result.
 

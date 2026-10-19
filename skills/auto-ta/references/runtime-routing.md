@@ -34,7 +34,15 @@ Before mutation, retrieve the Editor version, ready state, project root, active 
 
 Use core asset/material/scene operations first. Treat optional tool groups such as ProBuilder, VFX Graph, Animation Rigging, or provider-backed asset generation as unavailable until both the tool and matching Unity package are verified. Do not add a Unity package just because an MCP tool group exists.
 
-## Image generation
+## Unreal Engine and scenes
+
+For Unreal Engine scene/import jobs read [unreal-integration.md](unreal-integration.md).
+Use the exact authorized `.uproject`, verify Python capabilities, and distinguish
+saved-state CLI checks from renderer-backed visual checks. For scene module
+selection read [scene-production.md](scene-production.md); none of blockout,
+master/variant production, intermediate human review or weathering is mandatory.
+
+## Image generation for assets
 
 Image generation is appropriate for concept sheets, decals, masks, texture source imagery, and reference turnarounds that support a 3D asset. Standalone 2D art, sprite creation, and sprite-sheet production are outside this Skill. Image generation does not directly prove seamless tiling, physically meaningful material values, consistent orthographic views, mesh topology, rigging, animation, or engine compatibility. Validate and transform the image for its downstream 3D role.
 

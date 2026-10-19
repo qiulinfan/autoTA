@@ -2,6 +2,15 @@
 
 Create this contract before tool execution. Store it in `asset-contract.json` for production work; present a short plain-language summary to the user.
 
+For scene jobs add `scene_options` from [scene-production.md](scene-production.md)
+and maintain per-asset contracts for the actual geometry/texture deliveries.
+Inputs may be design ideas, gameplay constraints, multiple views and object
+references; record which are authoritative versus inspirational. Single-image
+reconstruction is an explicit intent, not a default. Default to autonomous
+execution with agent checks and final handoff. Resolve module/review choices once
+at kickoff, not once per asset. A human review stage is not an authorization to
+spend, upload or mutate an unspecified project.
+
 Apply [asset-standards.md](asset-standards.md) before choosing budgets. Record
 the selected preference source, importance/viewing distance, and processing
 route. Add `geometry.target_polygons`, `geometry.polygon_tolerance` (default
