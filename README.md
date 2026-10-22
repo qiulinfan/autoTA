@@ -10,13 +10,11 @@ upstream design docs state what is needed; AutoTA sources, generates, adapts,
 and audits it; the target project (e.g. a CCGS/Codex game-studio setup)
 integrates and verifies it in-engine.
 
-Five portable Agent Skills:
+Four portable Agent Skills:
 
 - `search-game-art` — requirement matrix, source-covered search, per-item
   license verification, audited acquisition; programmatic CC0 acquisition for
   uniformly licensed sources (Poly Haven API).
-- `create-2d-game-art` — deterministic 2D raster production (pixelize,
-  sequence, pack, audit) with closed-schema receipts.
 - `auto-ta` — Blender-side 3D technical art: authoring, adaptation, the
   isolated audit chain, round-trip validation, downstream optimization.
 - `generate-hosted-game-art` — hosted generation via user-supplied Meshy /
@@ -72,6 +70,7 @@ provider credits, agent tokens and likely repair work together.
 | Licensed existing assets | A suitable asset can be adapted efficiently | Use `search-game-art` to verify style, technical contents and licensing before acquisition |
 | Direct Blender authoring | Objects built from simple geometric parts, logical component structure, editable UVs, or exact text and numerals | Author locally, then audit and export |
 | Meshy / Tencent Hunyuan | Hosted generation selected for the brief | Use `generate-hosted-game-art` with authorized credentials and budget |
+| Source image generation | Concept, texture or reference images that support a 3D asset | Ask the user: the agent's built-in image tool (for example Codex ImageGen) or a hosted text-to-image job through `generate-hosted-game-art` with authorized credentials and budget |
 | Tripo API | Explicit API generation with task tracking | Use the [Tripo adapter](scripts/tripo-adapter.md), then continue local inspection and integration |
 | Tripo Studio web | Interactive generation using a Studio account | User manually downloads or uses Send to Blender / Studio Bridge; AutoTA resumes after local transfer |
 
@@ -182,7 +181,7 @@ still refuse to replace non-links.
 
 Before the first `CODEX_HOME` write, the linker validates the manifest and its
 exact Skill, agent, workflow, and profile inventories. It then creates direct
-links for the five Skills, two namespaced agents, and the complete product
+links for the four Skills, two namespaced agents, and the complete product
 root at `${CODEX_HOME}/workflow-products/autota`. Skills resolve bundled
 scripts and the handoff contract only through linked locations, so they work
 from an unrelated game cwd.

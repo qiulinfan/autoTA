@@ -7,7 +7,7 @@ description: "A 3D Technical Art Skill to create and validate game assets and sc
 
 ## Purpose
 
-Act as a 3D technical artist for a user who may know no technical-art vocabulary. Convert intent into a small, reversible 3D production job, execute it on an available DCC or engine surface, and return the asset plus evidence. Do not use this Skill for standalone 2D art, sprite creation, or sprite-sheet production; route that work to `$create-2d-game-art`. 2D imagery belongs here only as a source or component of a 3D asset. A script, README claim, render, or provider response is not by itself a finished game asset.
+Act as a 3D technical artist for a user who may know no technical-art vocabulary. Convert intent into a small, reversible 3D production job, execute it on an available DCC or engine surface, and return the asset plus evidence. Do not use this Skill for standalone 2D art, sprite creation, or sprite-sheet production; route that work to the discrete-sprite-lab 2D Skills (`$create-topdown-8dir-sprites`, `$create-fixed-direction-action-sprites`). 2D imagery belongs here only as a source or component of a 3D asset. A script, README claim, render, or provider response is not by itself a finished game asset.
 
 Match all user-facing explanations, questions, prompts, and handoffs to the user's language unless they request another language. Keep commands, identifiers, structured keys, action codes, and raw errors unchanged.
 
@@ -50,7 +50,7 @@ For a `rig_or_animation` job that aligns a skinned humanoid character with exter
 
 Read [references/runtime-routing.md](references/runtime-routing.md), then probe rather than assume.
 
-1. Use ImageGen for concept images, texture sources, masks, decals, or reference sheets that support the 3D asset. Treat generated maps as source imagery until channel semantics and tiling are validated.
+1. Generate concept images, texture sources, masks, decals, or reference sheets that support the 3D asset with the image source the user chooses; ask first and do not choose for them: the current agent's built-in image generation tool when it has one (for example Codex ImageGen), or a billable, user-authorized hosted text-to-image job through `$generate-hosted-game-art` (Meshy text-to-image or Hunyuan image). Record the chosen source in provenance. Treat generated maps as source imagery until channel semantics and tiling are validated.
 2. Use Blender Python for deterministic geometry, UV, material, rig, animation, light, render, and export operations. Prefer a healthy live Blender MCP for an already-open authored scene. For a new isolated asset, headless Blender is valid when the live bridge is unavailable.
 3. Use `search-game-art` when an existing licensed asset is preferable to original production. Preserve URL, license, author, file hash, and allowed use.
 4. Use `character-rig-animation-alignment` when a humanoid character and external animation rig must be normalized, retargeted, wired, and accepted together.

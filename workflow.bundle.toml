@@ -3,7 +3,7 @@ schema_version = 1
 [bundle]
 name = "autota"
 version = "1.0.0"
-description = "AutoTA: an evidence-driven technical-art pipeline (search, 2D, 3D, rig alignment, hosted generation) that sits midstream between design briefs and engine integration"
+description = "AutoTA: an evidence-driven technical-art pipeline (search, 3D, rig alignment, hosted generation) that sits midstream between design briefs and engine integration"
 skills_root = "skills"
 workflows_root = "workflows"
 profiles_root = "profiles"
@@ -13,14 +13,6 @@ agents_root = ".codex/agents"
 source_repository = "git@github.com:qiulinfan/qiulinfan.github.io.git"
 source_revision = "0e4cce8a474197170942e9b10984706bb9b95a05"
 migrated_generated_files = false
-
-[[provenance.sources]]
-repository = "https://github.com/qiulinfan/ImageToPixel.git"
-revision = "152bab66d3def65e6eaa5cd6ba97c00ac754ee31"
-scope = "General pixelization, ordered-frame processing, preview, sprite-sheet composition, and audit concepts reimplemented as create-2d-game-art"
-source_license = "none_declared"
-migrated_project_assets = false
-migrated_notebooks = false
 
 [legal]
 status = "unresolved"
@@ -38,11 +30,6 @@ mode = "direct-working-tree-link"
 name = "search-game-art"
 path = "skills/search-game-art"
 phases = ["art-discovery", "provenance"]
-
-[[skills]]
-name = "create-2d-game-art"
-path = "skills/create-2d-game-art"
-phases = ["art-production", "technical-validation"]
 
 [[skills]]
 name = "auto-ta"
@@ -67,7 +54,7 @@ entry_skill = "auto-ta"
 [[agents]]
 name = "autota_technical_artist"
 path = ".codex/agents/autota-technical-artist.toml"
-primary_skills = ["create-2d-game-art", "auto-ta", "character-rig-animation-alignment", "generate-hosted-game-art"]
+primary_skills = ["auto-ta", "character-rig-animation-alignment", "generate-hosted-game-art"]
 
 [[agents]]
 name = "autota_art_scout"

@@ -23,12 +23,10 @@ AutoTA 是一套可移植、以实际验收证据为依据的技术美术流程�
 说明需要什么；AutoTA 负责寻找、生成、调整和检查资产；目标项目（例如 CCGS／Codex
 游戏工作室配置）负责将资产集成到引擎并验证。
 
-包含五项可移植的 Agent Skill：
+包含四项可移植的 Agent Skill：
 
 - `search-game-art`：建立需求矩阵、覆盖不同来源的资源搜索、逐项许可核查和下载验收；
   支持从统一许可来源通过程序获取 CC0 资源，例如 Poly Haven API。
-- `create-2d-game-art`：确定性的二维图像制作，包括像素化、序列处理、打包和检查，
-  并输出具有严格字段约束的交付记录。
 - `auto-ta`：Blender 端的三维技术美术，包括建模、调整、隔离检查、导出再导入验证及后续优化。
 - `generate-hosted-game-art`：使用用户提供的 Meshy／腾讯混元凭据进行托管生成，
   包括免费能力探测、经预算授权的批量任务和生成记录。Tripo AI 通过独立的
@@ -57,6 +55,7 @@ Codex agent（`autota_technical_artist`、`autota_art_scout`），以及一个�
 | 已有授权资源 | 有合适资产，调整成本低于重新制作 | 通过 `search-game-art` 核查风格、技术内容及许可后获取 |
 | 直接在 Blender 中建模 | 简单几何组合、需要合理拆件和可编辑 UV，或包含精确文字与数字 | 本地制作后检查、导出 |
 | Meshy／腾讯混元 | 根据需求选择托管生成 | 使用 `generate-hosted-game-art`，确认凭据与预算授权 |
+| 源图生成 | 支撑三维资产的概念图、贴图或参考源图 | 先问用户：用当前 agent 内置的图像工具（例如 Codex ImageGen），还是经 `generate-hosted-game-art` 的托管文生图（确认凭据与预算授权） |
 | Tripo API | 需要 API 生成及任务追踪 | 使用 [Tripo 适配器](scripts/tripo-adapter.md)，再进行本地检查与集成 |
 | Tripo Studio 网页版 | 使用 Studio 账户进行交互式生成 | 用户手动下载，或通过 Send to Blender／Studio Bridge 传输；本地收到后继续流程 |
 
@@ -147,7 +146,7 @@ pwsh -NoProfile -File .\scripts\doctor.ps1
 `-Force`（PowerShell）或 `--force`（POSIX）仅用于替换冲突的符号链接，仍不会替换非链接对象。
 
 首次写入 `CODEX_HOME` 前，脚本会检查清单及准确的 Skill、agent、工作流和项目配置数量。
-随后链接五项 Skill、两个带命名空间的 agent，以及完整产品根目录
+随后链接四项 Skill、两个带命名空间的 agent，以及完整产品根目录
 `${CODEX_HOME}/workflow-products/autota`。Skill 从链接位置解析脚本及交付规范，因此可在
 其他游戏项目的工作目录中使用。
 

@@ -1,6 +1,6 @@
 # AutoTA repository conventions
 
-AutoTA is a portable technical-art pipeline: five Skills (search, 2D, 3D,
+AutoTA is a portable technical-art pipeline: four Skills (search, 3D,
 hosted generation, rig alignment), one shared handoff/receipt contract, two
 Codex agents, and one opt-in profile. It is the midstream between a game
 project's design brief (upstream) and that project's engine integration

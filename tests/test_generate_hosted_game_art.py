@@ -32,7 +32,6 @@ class HostedArtSkillContractTests(unittest.TestCase):
             "validation_status: prototype",
             "$auto-ta",
             "$character-rig-animation-alignment",
-            "$create-2d-game-art",
             "$search-game-art",
             "Match user-facing explanations",
         ):

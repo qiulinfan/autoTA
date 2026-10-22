@@ -28,7 +28,6 @@ class BundleContractTests(unittest.TestCase):
             {
                 "auto-ta",
                 "character-rig-animation-alignment",
-                "create-2d-game-art",
                 "generate-hosted-game-art",
                 "search-game-art",
             },
