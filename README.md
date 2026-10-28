@@ -14,7 +14,9 @@ Four portable Agent Skills:
 
 - `search-game-art` — requirement matrix, source-covered search, per-item
   license verification, audited acquisition; programmatic CC0 acquisition for
-  uniformly licensed sources (Poly Haven API).
+  uniformly licensed sources (Poly Haven API). Discovery prefers available search
+  tools and official APIs; original pages support visual/license review. Challenged
+  sources are recorded as blocked while other sources remain available.
 - `auto-ta` — Blender-side 3D technical art: authoring, adaptation, the
   isolated audit chain, round-trip validation, downstream optimization.
 - `generate-hosted-game-art` — hosted generation via user-supplied Meshy /

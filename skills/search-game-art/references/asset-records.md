@@ -31,6 +31,11 @@ query_families:
   - role_plus_silhouette_plus_emotional_valence
   - reference_traits_without_literal_costume_motifs
   - rigged_downloadable_plus_license
+retrieval_routes:
+  - kind: native_search_or_official_api
+    provider: ""
+    query: ""
+    outcome: completed
 source_classes:
   sketchfab:
     status: searched

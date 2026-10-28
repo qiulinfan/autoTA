@@ -62,6 +62,20 @@ Do not turn “like” into “copy every recognizable motif.” If a reference 
 
 Use internet search because availability, versions, prices, and licenses can change. Prefer original asset pages and official creator repositories.
 
+Separate retrieval from browser presentation. Prefer an available native search tool for broad
+discovery and documented public APIs for source catalogs; cache a fetched catalog within the
+task and filter its metadata locally. This Skill supplies a workflow, not a search backend:
+verify the current runtime's capabilities rather than assuming a particular tool exists.
+Use browser UI search only when needed; open known candidate/creator URLs directly for visual
+and license review. Respect each source's API terms, authentication and rate limits.
+
+If a source presents a CAPTCHA or human-verification challenge, mark it `blocked` in the search
+coverage record and continue other sources. Do not refresh repeatedly, rotate profiles/proxies,
+hide automation or use challenge-solving services. Request human help only if that source is
+necessary. When the parent task requires full-process recording, show queries and real outcomes
+contemporaneously on its recorded research surface and review originals in the captured browser;
+do not make unrecorded searches and reconstruct them later. The parent workflow owns capture.
+
 Search each high-priority row across multiple query families, not one literal phrase:
 
 ```text
